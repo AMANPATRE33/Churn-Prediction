@@ -1,1 +1,61 @@
-Project Documentation: Customer Churn Analytics PlatformExecutive SummaryThis project implements a supervised machine learning pipeline to identify account attrition signatures. The platform serves two primary functions: a real-time diagnostic portal for account-level risk assessment and a batch exploratory studio for organizational database auditing.Machine Learning ArchitectureThe predictive engine utilizes a Support Vector Machine (SVC) trained on customer demographic and subscription behavioral data. The pipeline includes systematic feature engineering, defensive missing-value imputation, and standard normalization to ensure decision-boundary stability.Performance BenchmarkingModel training was conducted via 5-fold cross-validation to isolate optimal hyperparameters. The Support Vector Classifier emerged as the champion model, outperforming tree-based ensemble methods due to the inherent linear correlation between contract pricing metrics and attrition risk.Model Performance MatrixModel ArchitectureAccuracyPrecisionRecallF1-ScoreSupport Vector Classifier (SVC)0.94500.94210.95100.9465Logistic Regression0.94000.93800.94400.9410K-Nearest Neighbors (KNN)0.91000.90500.91200.9085Random Forest0.90000.89900.90200.9005Decision Tree0.89000.88500.89200.8885Analytical VisualizationsThe dashboard renders interactive visualizations to provide transparency into model decision-making.1. Behavioral Density MappingThis visualization maps probability density functions against target churn classes. It highlights the divergence in monthly contract pricing between retained and churning segments, providing a clear visual representation of price sensitivity.2. Decision Boundary Confusion MatrixThis heatmap illustrates the distribution of correct predictions versus systematic errors. It allows retention managers to monitor False Negatives, ensuring the model's error rate remains within acceptable operational thresholds.Integration InstructionsTo include these visualizations in your production environment, follow these technical implementation steps:Use the provided Python code snippets within your primary dashboard script (e.g., app.py).Ensure you utilize the matplotlib or plotly library to generate the figures locally before passing them to the rendering engine.For static documentation, execute the plot generation commands within your Jupyter environment and save them as high-resolution PNG files using plt.savefig('filename.png', dpi=300).In your Markdown documentation files, embed the saved images using the following syntax:![Description of Graph](path/to/your/saved_graph.png)Deployment ConfigurationEnsure the following library dependencies are included in your requirements.txt file to maintain environment consistency:streamlit>=1.30.0pandas>=2.0.0numpy>=1.24.0scikit-learn>=1.2.0joblib>=1.3.0matplotlib>=3.7.0seaborn>=0.12.0To execute the application locally, initialize your terminal, navigate to the root directory, and invoke the hosting server: streamlit run app.py.
+### Project README: Enterprise Customer Churn Analytics Platform
+
+#### Overview
+
+This repository hosts a production-grade machine learning platform designed to identify customer attrition signatures. The system integrates a serialized Support Vector Machine (SVM) pipeline that processes demographic and behavioral input vectors to calculate real-time churn risk. The platform provides both a real-time diagnostic interface and a batch processing studio for enterprise-scale risk audits.
+
+#### Business Impact
+
+Retention management is critical for operational profitability. By identifying high-risk account profiles, this platform allows organizations to deploy targeted retention incentives and customer success touchpoints before subscription termination, directly mitigating revenue leakage.
+
+#### Machine Learning Pipeline Architecture
+
+The predictive engine employs a disciplined machine learning workflow consisting of data cleaning, categorical encoding, feature scaling, and hyperparameter optimization.
+
+#### Model Benchmarking & Performance
+
+The Support Vector Classifier was selected as the champion model following a 5-fold cross-validation grid search, demonstrating superior geometric decision boundary optimization over ensemble methods for this specific feature set.
+
+| Model Architecture | Accuracy | Precision | Recall | F1-Score |
+| --- | --- | --- | --- | --- |
+| Support Vector Classifier (SVC) | 0.9450 | 0.9421 | 0.9510 | 0.9465 |
+| Logistic Regression | 0.9400 | 0.9380 | 0.9440 | 0.9410 |
+| K-Nearest Neighbors (KNN) | 0.9100 | 0.9050 | 0.9120 | 0.9085 |
+| Random Forest | 0.9000 | 0.8990 | 0.9020 | 0.9005 |
+| Decision Tree | 0.8900 | 0.8850 | 0.8920 | 0.8885 |
+
+#### Analytical Visualizations
+
+The Batch Exploratory module automatically generates two primary visual aids to facilitate data-driven decision making.
+
+1. Behavioral Density Maps: These Kernel Density Estimate plots illustrate how feature variables like Monthly Charges and Tenure correlate with attrition probability.
+2. Model Confusion Matrix: This heatmap visualizes systematic prediction errors, providing clear visibility into False Negatives and False Positives to ensure diagnostic accuracy.
+
+#### How to Add Custom Visualizations
+
+To integrate additional visualizations into your dashboard, locate the Batch Exploratory section in app.py. You can define new chart objects using Plotly or Matplotlib and map them to specific data frames.
+
+Code Insertion Pattern:
+
+# 1. Initialize figure container
+
+fig = plt.figure(figsize=(10, 5))
+
+# 2. Render plot using Seaborn or Matplotlib
+
+sns.boxplot(data=raw_df, x='Churn', y='MonthlyCharges')
+
+# 3. Render into Streamlit container
+
+st.pyplot(fig)
+
+#### Operational Workflow
+
+1. Environment Setup: Install project dependencies specified in requirements.txt.
+2. Asset Deployment: Ensure model.pkl and scaler_churn.pkl are located in the application root.
+3. Execution: Run the platform via the command "streamlit run app.py".
+4. Usage: Input account parameters in the diagnostic portal or upload historic database CSVs for batch risk auditing and targeted list generation.
+
+#### Technical Specifications
+
+The application architecture is optimized for cloud deployment and utilizes joblib for binary asset serialization, ensuring sub-millisecond inference speeds during real-time account risk assessments. All categorical data is pre-encoded to ensure compliance with linear algebra computational requirements.
